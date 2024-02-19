@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprodutor de Áudio do YouTube</title>
+</head>
+<body>
+    <h1>Reprodutor de Áudio do YouTube</h1>
+    <input type="text" id="youtubeUrl" placeholder="Insira a URL do YouTube">
+    <button onclick="playAudio()">Reproduzir</button>
+    <br><br>
+    <audio controls id="audioPlayer" style="display: none">
+        Seu navegador não suporta a reprodução de áudio.
+    </audio>
+
+    <script>
+        async function playAudio() {
+            const youtubeUrl = document.getElementById('youtubeUrl').value;
+            const response = await fetch(`/play?url=${encodeURIComponent(youtubeUrl)}`);
+            const data = await response.json();
+
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = data.audioUrl;
+            audioPlayer.style.display = 'block';
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>
